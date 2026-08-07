@@ -9,7 +9,7 @@ description = "Cycle-order calculators and blindfold memorization generation for
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
-authors = [{ name = "Your Name" }]
+authors = [{ name = "Nathaniel Chen" }]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
