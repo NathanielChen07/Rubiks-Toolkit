@@ -9,11 +9,11 @@ Rubik's Cube analysis tools:
   memorization in Speffz letter pairs (Old Pochmann or M2, 
   `--method old_pochmann` by default).
 
-Both tools work by simulating cube state as a permutation (not by
-brute-force repeating a sequence until it "looks" solved), then using
-group-theory facts (cycle decomposition and least-common-multiple) to
-compute the answer directly. See the module docstrings in
-`src/rubiks_toolkit/` for the full mathematical writeup of each.
+Both tools work by simulating a cube state as a permutation (not by
+brute force repeating a sequence until it "looks" solved), then using
+group theory facts (cycle decomposition and least common multiple) to
+compute the answer directly. See the files in docs for the full description
+of each.
 
 ## Install
 
@@ -56,7 +56,7 @@ rubiks-toolkit bld-memo "D2 F' R2 B L2 F' D2 B2 D2 F2 L F' U B2 U' F2 L' B2 F'"
 rubiks-toolkit bld-memo "R U R' U' M2 F2" --method m2
 ```
 
-Output includes the corner and edge letter pairs (standard Speffz scheme), plus a
+Output includes the edge and corner letter pairs (standard Speffz scheme), plus a
 step-by-step detail line showing which cube position each letter
 corresponds to. 
 
