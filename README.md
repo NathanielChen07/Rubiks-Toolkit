@@ -1,7 +1,6 @@
 # rubiks-toolkit
 
-Rubik's cube analysis tools, unified into one installable package with a
-shared command-line interface:
+Rubik's cube analysis tools:
 
 - **`order`** — given a move sequence, compute how many times it must be
   repeated to bring a cube back to a solved-looking state. Works for any
