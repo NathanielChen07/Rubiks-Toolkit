@@ -3,7 +3,7 @@
 This uses a different, piece-based cube model than ``rubiks_toolkit.nxn``
 (which is sticker-based and generalizes to any N). This is because the two
 are solving different problems: sticker permutation order vs. piece-level
-blindfold traving with orientation and face-relabeling. 
+blindfold tracing with orientation and face-relabeling. 
 
 # Cube model:
 
