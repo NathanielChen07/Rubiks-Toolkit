@@ -1,3 +1,3 @@
-"""rubiks_toolkit: cycle-order calculators and BLD memo generation for Rubik's cubes."""
+"""rubiks_toolkit: cycle-order calculators, BLD memo generation, and Square-1 scrambles."""
 
 __version__ = "0.1.0"

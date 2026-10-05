@@ -1,19 +1,24 @@
 # rubiks-toolkit
 
-Rubik's Cube analysis tools:
+Rubik's Cube and Square-1 analysis tools:
 
 - **`order`** — given a move sequence, compute how many times it must be
   repeated to bring a cube back to a solved-looking state. Works for any
-  cube size N (the standard 3x3 is just `--size 3`, the default).
+  NxN sized cube (the standard 3x3 is just `--size 3`, the default).
 - **`bld-memo`** — given a 3x3 scramble, generate a blindfold-solving
   memorization in Speffz letter pairs (Old Pochmann or M2, 
   `--method old_pochmann` by default).
+- **`sq1-scramble`** — generates a random, legal Square-1
+  scramble in standard WCA notation.
 
-Both tools work by simulating a cube state as a permutation (not by
-brute force repeating a sequence until it "looks" solved), then using
-group theory facts (cycle decomposition and least common multiple) to
-compute the answer directly. See the files in docs for the full description
-of each.
+The `order` and `bld-memo` tools work by simulating a cube state as a
+permutation (not by brute force repeating a sequence until it "looks" solved),
+then using group theory facts (cycle decomposition and least common multiple)
+to compute the answer directly.
+
+The `sq1-scramble` tool models each layer as 12 30-degree slots and only
+commits a move when its slice is physically possible. See the files in docs
+for the full description of each.
 
 ## Install
 
@@ -67,6 +72,23 @@ DF (U) for M2.
 For example, if the cube is scrambled with white top green front, the memorization is also
 done from white top green front, even if wide or slice moves are part of the scramble.
 
+### Square-1 scramble (`sq1-scramble`)
+
+```bash
+rubiks-toolkit sq1-scramble
+# (3,2)/(-2,4)/(-3,6)/(2,2)/(-5,-5)/(-1,2)/(4,-2)/[(-3,-1)]/(-3,6)/(-3,2)/(0,6)/(3,-4)
+# Shape scrambles starting at move 8, marked in [brackets]: (-3,-1)
+
+rubiks-toolkit sq1-scramble --plain   ]
+# (3,2)/(-2,4)/(-3,6)/(2,2)/(-5,-5)/(-1,2)/(4,-2)/(-3,-1)/(-3,6)/(-3,2)/(0,6)/(3,-4)
+# raw notation only, no indicator for when shape scramble starts
+```
+
+Each scramble is 12-14 moves. The first 5-7 keep the puzzle cube shaped while
+the pieces get mixed up. The move in `[brackets]` is the one whose slice
+first breaks the cube shape, and every move after it may scramble the shape
+further. 
+
 ### As a library
 
 ```python
@@ -85,6 +107,13 @@ memo = generate_memo(cube, "old_pochmann")
 print(memo["corner_pairs"], memo["edge_pairs"])
 ```
 
+```python
+from rubiks_toolkit.square1 import generate_moves, format_scramble
+
+moves, shape_break = generate_moves()
+print(format_scramble(moves))
+```
+
 ## Development
 
 ```bash
@@ -93,8 +122,10 @@ pytest
 ```
 
 Tests cover known reference algorithms (sexy move, sledgehammer, T-perm),
-edge cases (even vs. odd cube slice-move rules, layer-range notation), and
-the BLD tracer against several verified scrambles.
+edge cases (even vs. odd cube slice-move rules, layer-range notation),
+the BLD tracer against several verified scrambles, and Square-1 slice
+legality (including the TNoodle `(1,-1)/` vs. `(-1,1)/` reference case)
+plus the shape of generated scrambles.
 
 ## License
 

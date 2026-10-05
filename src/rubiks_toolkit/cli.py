@@ -2,16 +2,19 @@
 
 Subcommands
 -----------
-order       Compute how many times a move sequence must repeat to return
-            an NxN cube to a solved-looking state (defaults to N=3).
-bld-memo    Convert a scramble into a Speffz blindfold memorization. (defaults to OP)
+order         Compute how many times a move sequence must repeat to return
+              an NxN cube to a solved-looking state (defaults to N=3).
+bld-memo      Convert a scramble into a Speffz blindfold memorization. (defaults to OP)
+sq1-scramble  Generate a random Square-1 scramble in WCA notation.
 """
 
 import argparse
+import random
 import sys
 
 from . import bld_memo as bld
 from . import nxn
+from . import square1 as sq1
 
 
 def _cmd_order(args):
@@ -40,10 +43,21 @@ def _cmd_bld_memo(args):
     return 0
 
 
+def _cmd_sq1_scramble(args):
+    end_with_slice = random.choice([True, False])
+    moves, shape_break = sq1.generate_moves(end_with_slice=end_with_slice)
+    if args.plain:
+        print(sq1.format_scramble(moves, end_with_slice))
+    else:
+        print(sq1.format_scramble(moves, end_with_slice, mark=shape_break))
+        print(sq1.describe_shape_break(moves, shape_break))
+    return 0
+
+
 def build_parser():
     parser = argparse.ArgumentParser(
         prog="rubiks-toolkit",
-        description="Cycle-order calculators and BLD memo generation for Rubik's cubes.",
+        description="Cycle-order calculators, BLD memo generation, and Square-1 scrambles.",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
@@ -68,6 +82,16 @@ def build_parser():
         help="Edge-tracing method (default: old_pochmann).",
     )
     p_bld.set_defaults(func=_cmd_bld_memo)
+
+    p_sq1 = sub.add_parser(
+        "sq1-scramble",
+        help="Generate a random Square-1 scramble in WCA notation.",
+    )
+    p_sq1.add_argument(
+        "--plain", action="store_true",
+        help="Print only the raw scramble, without marking where the shape scrambles.",
+    )
+    p_sq1.set_defaults(func=_cmd_sq1_scramble)
 
     return parser
 

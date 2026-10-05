@@ -1,3 +1,5 @@
+import re
+
 from rubiks_toolkit.cli import main
 
 
@@ -27,3 +29,18 @@ def test_bld_memo_command(capsys):
     assert ret == 0
     out = capsys.readouterr().out
     assert "Scramble" in out
+
+
+def test_sq1_scramble_command(capsys):
+    ret = main(["sq1-scramble"])
+    assert ret == 0
+    out = capsys.readouterr().out.splitlines()
+    assert len(out) == 2
+    assert "cube shaped" in out[1] or "Shape scrambles" in out[1]
+
+
+def test_sq1_scramble_command_plain(capsys):
+    ret = main(["sq1-scramble", "--plain"])
+    assert ret == 0
+    out = capsys.readouterr().out.strip()
+    assert re.fullmatch(r"(\(-?\d,-?\d\)/){11,13}\(-?\d,-?\d\)/?", out)
