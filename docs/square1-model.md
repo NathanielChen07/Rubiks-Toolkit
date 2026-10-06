@@ -29,11 +29,11 @@ therefore solvable. Output is in standard WCA notation:
 
 # Moves:
 
-- Twist `(x, y)`: rotate the top layer by x clicks and the bottom layer by
-  y clicks (each click = 30 degrees, range -5..6). `(0,0)` is never
+- Twist `(x, y)`: rotate the top layer by x spots and the bottom layer by
+  y spots (each spot = 30 degrees, range -5..6). `(0,0)` is never
   generated since it turns nothing. Twists are always physically possible:
   the top and bottom layers spin independently no matter what shape the
-  puzzle is in.
+  puzzle is in. `-` denotes a counterclockwise rotation.
 - Slice `/`: swaps the top layer's right half (slots 6-11) with the bottom
   layer's left half (slots 0-5). This is only physically possible when
   neither layer has a corner straddling the cut line. That means slots
